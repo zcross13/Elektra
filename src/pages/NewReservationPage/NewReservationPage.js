@@ -1,5 +1,5 @@
-export default function NewReservationPage(){
+export default function NewReservationPage(props){
     return(
-        <h1>New Reservation Page</h1>
+            <h1>New Reservation</h1>
     )
 }
