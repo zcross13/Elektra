@@ -1,5 +1,5 @@
-export default function ReservationHistoryPage(props){
+export default function ReservationHistoryPage({reservations}){
     return(
-        <h1>Reservation History Page</h1>
+        <h1> Reservation History Page</h1>
     )
 }
