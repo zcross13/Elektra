@@ -1,9 +1,16 @@
 import { useState , useEffect } from 'react'
-import data from "../../data"
+import { useNavigate } from 'react-router-dom'
+
 
 export default function TeslasDisplayPage() {
     const [teslas, setTeslas] = useState([])
     const [error, setError] = useState(null)
+
+    const navigate = useNavigate()
+
+    const navigateToReservation = () => {
+        navigate('/reservations/new')
+    }
     
     useEffect(() => {
         const getTesla = async () => {
@@ -37,7 +44,7 @@ export default function TeslasDisplayPage() {
                                 <>
                                 <li>{tesla.images}</li>
                                 <li>{tesla.model} {tesla.year}</li>
-                                <button>Reserve Me</button>
+                                <button onClick={navigateToReservation}>Reserve Me</button>
                                 </>
                         )
                             })
