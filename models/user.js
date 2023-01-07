@@ -3,8 +3,14 @@ const bcrypt = require('bcrypt')
 
 const SALT_ROUNDS = 6 
 
+
 const userSchema = new Schema({
-    name:{type: String, required: true},
+    name:{
+        type: String, 
+        required: true,
+        min:2, 
+        max:50,
+        },
     email : {
         type:String, 
         unique:true, 
@@ -17,7 +23,7 @@ const userSchema = new Schema({
         trim: true, 
         minLength: 3, 
         required: true
-    }
+    }, 
 }, {
     timestamps: true, 
     toJSON: {

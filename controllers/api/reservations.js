@@ -1,5 +1,6 @@
 const Reservations = require('../../models/reservation')
 
+
 const dataController = {
     // Index,
     index(req, res, next) {

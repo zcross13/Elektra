@@ -1,10 +1,18 @@
 const express = require('express')
 const router = express.Router()
-const { checkToken, dataController, apiController } = require('../../controllers/api/users')
-const ensureLoggedIn = require('../../config/ensureLoggedIn')
+const { dataController, apiController } = require('../../controllers/api/users')
 
-router.post('/', dataController.create, apiController.auth)
-router.post('/login', dataController.create, apiController.auth)
-router.get('/check-token', ensureLoggedIn, checkToken)
+// add routes
+// Index /api/teslas/
+router.get('/', dataController.index, apiController.index)
+// Delete /api/teslas/:id
+router.delete('/:id', dataController.destroy, apiController.show)
+// Update /api/teslas/:id
+router.put('/:id', dataController.update, apiController.show)
+// Create /api/teslas/
+router.post('/', dataController.create, apiController.show)
+// Show /api/teslas/:id
+router.get('/:id', dataController.show, apiController.show)
 
-module.exports = router 
+
+module.exports = router

@@ -2,16 +2,22 @@ import { useState , useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 
-export default function TeslasDisplayPage() {
+
+export default function Homepage() {
     const [teslas, setTeslas] = useState([])
     const [error, setError] = useState(null)
 
     const navigate = useNavigate()
 
-    const navigateToReservation = () => {
-        navigate('/reservations/new')
-    }
+    // const navigateToReservation = () => {
+    //     navigate('/reservations/new')
+    // }
     
+    // Show tesla page 
+    const navigateToTesla = (id) => {
+        navigate(`/api/teslas/${id}`)
+    }
+
     useEffect(() => {
         const getTesla = async () => {
             try {
@@ -44,27 +50,13 @@ export default function TeslasDisplayPage() {
                                 <>
                                 <li>{tesla.images}</li>
                                 <li>{tesla.model} {tesla.year}</li>
-                                <button onClick={navigateToReservation}>Reserve Me</button>
+                                <button onClick={() => navigateToTesla(tesla._id)}>Reserve Me</button>
                                 </>
                         )
                             })
                     }
                 </ul>
-                {error &&
-                    <h3>{error}</h3>
-                }
             </div>
         </>
     )
 }
-
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const response = await fetch('api/teslas')
-    //         const data = await response.json()
-    //         setTeslas(data)
-    //     }
-
-    //     fetchData()
-    // }, [])

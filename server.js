@@ -1,5 +1,6 @@
 require('dotenv').config();
 require('./config/database')
+
 const express = require('express')
 const path = require('path')
 const favicon = require('serve-favicon')
@@ -19,12 +20,23 @@ app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')))
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(require('./config/checkToken'))
 
-const ensureLoggedIn = require('./config/ensureLoggedIn')
+const ensureLoggedIn = require('./config/ensureLoggedIn');
+
 // app.use('/api/users', ensureLoggedIn, require('./routes/api/users'))
+
+// Loads Teslas from server 
+// app.get('/api/teslas', (req,res) => {
+//     res.json(teslas)
+// })
+
 app.use('/api/teslas', require('./routes/api/teslas'))
 app.use('/api/reservations',  require('./routes/api/reservations'))
+app.use('/api/auth',  require('./routes/api/auth'))
+// app.use('/api/users',  require('./routes/api/users'))
 
-app.use(require('./config/checkToken'))
+// app.use(require('./config/checkToken'))
+
+
 /*
 app.use('/api', routes) <====== Finish code once you got it
 */

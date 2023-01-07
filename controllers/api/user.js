@@ -1,54 +1,54 @@
-const Guest = require("../../models/guest")
+const Users = require("../../models/user")
 
 const dataController = {
     // Index,
     index(req, res, next) {
-        Profiles.find({}, (err, allProfiles) => {
+        Users.find({}, (err, allUsers) => {
             if (err) {
                 res.status(400).send({
                     msg: err.message
                 })
             } else {
-                res.locals.data.profiles = allProfiles 
+                res.locals.data.users = allUsers
                 next()
             }
         })
     },
     // Destroy
     destroy(req, res, next) {
-        Profiles.findByIdAndDelete(req.params.id, (err, deletedProfiles) => {
+        Users.findByIdAndDelete(req.params.id, (err, deletedUser) => {
             if (err) {
                 res.status(400).send({
                     msg: err.message
                 })
             } else {
-                res.locals.data.profile = deletedProfiles
+                res.locals.data.user = deletedUser
                 next()
             }
         })
     },
     // Update
     update(req, res, next) {
-        Profiles.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedProfiles) => {
+        Users.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedUser) => {
             if (err) {
                 res.status(400).send({
                     msg: err.message
                 })
             } else {
-                res.locals.data.profiles = updatedProfiles
+                res.locals.data.users = updatedUser
                 next()
             }
         })
     },
     // Create
     create(req, res, next) {
-        Profiles.create(req.body, (err, createdProfiles) => {
+        Users.create(req.body, (err, createdUser) => {
             if (err) {
                 res.status(400).send({
                     msg: err.message
                 })
             } else {
-                res.locals.data.profile = createdProfiles
+                res.locals.data.user = createdUser
                 next()
             }
         })
@@ -56,14 +56,14 @@ const dataController = {
     // Edit
     // Show
     show(req, res, next) {
-        Profiles.findById(req.params.id, (err, foundProfiles) => {
+        Users.findById(req.params.id, (err, foundUser) => {
             if (err) {
                 res.status(404).send({
                     msg: err.message,
-                    output: 'Could not find a reservation with that ID'
+                    output: 'Could not find a user with that ID'
                 })
             } else {
-                res.locals.data.profiles = foundProfiles
+                res.locals.data.user = foundUser
                 next()
             }
         })
@@ -72,10 +72,10 @@ const dataController = {
 
 const apiController = {
     index(req, res, next) {
-        res.json(res.locals.data.profiles)
+        res.json(res.locals.data.users)
     },
     show(req, res, next) {
-        res.json(res.locals.data.profile)
+        res.json(res.locals.data.user)
     }
 }
 
