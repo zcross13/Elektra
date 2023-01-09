@@ -24,6 +24,14 @@ const userSchema = new Schema({
         minLength: 3, 
         required: true
     }, 
+    reservations:[ {
+            type: Schema.Types.ObjectId,           
+            ref:'Reservations'
+    }],
+    isAdmin:{
+        type: Boolean, 
+        default: false, 
+    }, 
 }, {
     timestamps: true, 
     toJSON: {

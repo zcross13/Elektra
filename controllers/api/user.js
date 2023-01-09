@@ -1,19 +1,6 @@
 const Users = require("../../models/user")
 
 const dataController = {
-    // Index,
-    index(req, res, next) {
-        Users.find({}, (err, allUsers) => {
-            if (err) {
-                res.status(400).send({
-                    msg: err.message
-                })
-            } else {
-                res.locals.data.users = allUsers
-                next()
-            }
-        })
-    },
     // Destroy
     destroy(req, res, next) {
         Users.findByIdAndDelete(req.params.id, (err, deletedUser) => {
@@ -36,19 +23,6 @@ const dataController = {
                 })
             } else {
                 res.locals.data.users = updatedUser
-                next()
-            }
-        })
-    },
-    // Create
-    create(req, res, next) {
-        Users.create(req.body, (err, createdUser) => {
-            if (err) {
-                res.status(400).send({
-                    msg: err.message
-                })
-            } else {
-                res.locals.data.user = createdUser
                 next()
             }
         })

@@ -7,8 +7,8 @@ const teslaSchema = new Schema({
         require: true 
     }, 
     model: { type: String, require: true }, 
-    price: { type: [String], require: true }, 
-    images: { type: String, require: true }, 
+    price: { type: String, require: true }, 
+    images: [{ type: String, require: true }], 
     year: { type: String, require: true }, 
     miles: { type: String, require: true }, 
     fuelEconomy: { type: String, require: true }, 
@@ -22,10 +22,8 @@ const teslaSchema = new Schema({
     stockNumber: { 
         type: String, 
         require: true 
-    }, 
-    reservations: {
-        type: [String]
-    }
+    },
+    avaliabile:[{unavailableDates:{type: [Date] }}]
 })
 
 
