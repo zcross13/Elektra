@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { format } from 'date-fns'
 import { DateRange } from 'react-date-range'
+import SearchItem from '../../components/searchItem/SearchItem'
 
 export default function List() {
 
@@ -63,6 +64,10 @@ export default function List() {
                         <button>Search</button>
                     </div>
                     <div className='listResults'></div>
+                        <SearchItem/> 
+                        <SearchItem/>
+                        <SearchItem/>
+                        <SearchItem/>
                 </div>
             </div>
         </div>
