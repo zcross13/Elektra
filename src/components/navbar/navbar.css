@@ -23,5 +23,6 @@
     border: none; 
     padding: 5px 10px; 
     cursor: pointer; 
-    color: black
+    color: #8b6a75; 
+    background-color: white;
 }

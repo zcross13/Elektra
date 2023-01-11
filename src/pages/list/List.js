@@ -67,7 +67,9 @@ export default function List() {
                         <button>Search</button>
                     </div>
                     <div className='listResults'></div>
+                    {loading ? "loading": <>
                     <SearchItem/>
+                    </>}
                 </div>
             </div>
         </div>

@@ -12,9 +12,9 @@ const useFetch = (url) => {
         const fetchData = async ()  => {
             setLoading(true)
             try{
-            const response = await axios.get('/teslas')
-            console.log(response)
-            setApiData(response.data)
+            const response = await axios.get(url)
+            const data = await response?.data
+            setApiData(data)
         }catch(err){
             setError(err)
         }

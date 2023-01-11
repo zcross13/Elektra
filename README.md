@@ -1,70 +1,133 @@
-# Getting Started with Create React App
+# ** Elektra Booking **
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+### A MERN stack base application. Elektra is a booking application when you can book Teslas. 
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The project demostration a knowledge in the following... 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. CRUD 
+2. Node.js
+3. Express
+4. JSX
+5. Mongoose 
+6. Javascript
+7. HTML
+8. CSS
+9. React
+10. Axios 
 
-### `npm test`
+## Requirements/Getting Started 
+For development, you will need Node.js installed in your environemnt along with the following... 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Package.json**
+```js
+{
+  "name": "elektra",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "18.7"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-regular-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.2.2",
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "date-fns": "^2.29.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.8.2",
+    "morgan": "^1.10.0",
+    "react": "^18.2.0",
+    "react-date-range": "^1.4.0",
+    "react-datepicker": "^4.8.0",
+    "react-datetime": "^3.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.6.1",
+    "react-scripts": "5.0.1",
+    "react-time-picker": "^5.1.0",
+    "react-time-range": "^1.0.4",
+    "serve-favicon": "^2.5.0",
+    "web-vitals": "^2.1.4"
+  },
+  
 
-### `npm run build`
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Node Resources
+- [official Node.js website](https://nodejs.org/) and download the installer.
+- [npmjs](https://www.npmjs.com/) *Remember look up all npm install*
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Project Planning Phase 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Trello Board:
+[Trello Board](https://trello.com/b/HS82EOxD/project-3)
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## *Entity–relationship model*
+![ERD!](https://lucid.app/lucidchart/a78fc6a3-1f00-4443-a260-e2f431cec752/edit?page=0_0&invitationId=inv_2b6cedd8-2500-4fbb-9910-efa0bd59df4f#)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Main Mongoose Model **Tesla Model**
 
-## Learn More
+```js 
+const teslaSchema = new mongoose.Schema({
+    model: { 
+        type: String, 
+        require: true 
+    }, 
+    pricePerDay: { 
+        type: Number, 
+        require: true 
+    }, 
+    images: { 
+        type:[ String], 
+        require: true 
+    }, 
+    teslaDescription: {
+        type: String, 
+        required: true
+    },
+    teslaDetails: {
+        type: String, 
+        required: true
+    },
+    rating:{
+        type:Number, 
+        min:0, 
+        max:5,
+    }, 
+    reservations:[{unavailableDates: {type: [Date]}}]
+})
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## BIGGEST CHALLENGE 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+My biggest challenege was connecting the frontend to the backend
 
-### Code Splitting
+## KEY LEARNING AND KEY TAKEAWAY 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+My biggest takeaway was gaining a deeper understanding of signup/login auth.	:face_exhaling:  
 
-### Analyzing the Bundle Size
+## Things I want to add 
+- :pushpin: Finishing connecting the frontend and backend  
+- :pushpin: Complete booking site with airflights, and hotels. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+## Contributions:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+- General Assembly's Instructional Team :clap:  
+- Youtube Lama Dev 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Q&A??  
