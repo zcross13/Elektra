@@ -10,13 +10,12 @@ The project demostration a knowledge in the following...
 1. CRUD 
 2. Node.js
 3. Express
-4. JSX
-5. Mongoose 
-6. Javascript
-7. HTML
-8. CSS
-9. React
-10. Axios 
+4. Mongoose 
+5. Javascript
+6. HTML
+7. CSS
+8. React
+9. Axios 
 
 ## Requirements/Getting Started 
 For development, you will need Node.js installed in your environemnt along with the following... 
@@ -75,7 +74,7 @@ Trello Board:
 
 
 ## *Entity–relationship model*
-![ERD!](https://lucid.app/lucidchart/a78fc6a3-1f00-4443-a260-e2f431cec752/edit?page=0_0&invitationId=inv_2b6cedd8-2500-4fbb-9910-efa0bd59df4f#)
+![ERD!](https://lucid.app/lucidchart/a78fc6a3-1f00-4443-a260-e2f431cec752/edit?invitationId=inv_2b6cedd8-2500-4fbb-9910-efa0bd59df4f)
 
 
 ## Main Mongoose Model **Tesla Model**
@@ -109,6 +108,52 @@ const teslaSchema = new mongoose.Schema({
     }, 
     reservations:[{unavailableDates: {type: [Date]}}]
 })
+```
+
+## Fav part 
+
+```js 
+const jwt = require('jsonwebtoken')
+const createError = require('./error')
+
+const verifyToken = (req,res,next) => {
+    const token = req.cookies.access_token; 
+    if(!token){
+        return next(createError(401, "Your are not autheticated!"))
+    }
+
+    jwt.verify(token,process.env.SECRET, (err, user) =>{
+        if(err) return next(createError(403, "Token is not valid"))
+        req.user = user
+        next()
+    })
+    
+}
+
+const verifyUser = (req,res,next) => {
+    verifyToken(req, res, () => {
+        if(req.user.id === req.params.id || req.user.isAdmin){
+            next()
+        }else{
+            return next(createError(403, "You are not authorized!"))
+        }
+    })
+}
+
+const verifyAdmin = (req,res,next) => {
+    verifyToken(req, res, () => {
+        if(req.user.isAdmin){
+            next()
+        }else{
+            return next(createError(403, "You are not authorized!"))
+        }
+    })
+}
+
+
+
+module.exports = {verifyToken, verifyUser, verifyAdmin}
+
 ```
 
 ## BIGGEST CHALLENGE 
