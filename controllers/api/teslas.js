@@ -1,13 +1,11 @@
-const Teslas = require('../../models/tesla')
+const Teslas = require("../../models/teslas")
 
 const dataController = {
     // Index,
     index(req, res, next) {
         Teslas.find({}, (err, allTeslas) => {
             if (err) {
-                res.status(400).send({
-                    msg: err.message
-                })
+                next(err)
             } else {
                 res.locals.data.teslas = allTeslas
                 next()
@@ -18,22 +16,18 @@ const dataController = {
     destroy(req, res, next) {
         Teslas.findByIdAndDelete(req.params.id, (err, deletedTesla) => {
             if (err) {
-                res.status(400).send({
-                    msg: err.message
-                })
+                next(err)
             } else {
-                res.locals.data.tesla = deletedTesla
+                res.status(200).json('hotel has been deleted')
                 next()
             }
-        })
+        }) 
     },
     // Update
     update(req, res, next) {
-        Teslas.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedFruit) => {
+        Teslas.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedTesla) => {
             if (err) {
-                res.status(400).send({
-                    msg: err.message
-                })
+                next(err)
             } else {
                 res.locals.data.tesla = updatedTesla
                 next()
@@ -44,9 +38,7 @@ const dataController = {
     create(req, res, next) {
         Teslas.create(req.body, (err, createdTesla) => {
             if (err) {
-                res.status(400).send({
-                    msg: err.message
-                })
+                next(err)
             } else {
                 res.locals.data.tesla = createdTesla
                 next()
@@ -58,10 +50,7 @@ const dataController = {
     show(req, res, next) {
         Teslas.findById(req.params.id, (err, foundTesla) => {
             if (err) {
-                res.status(404).send({
-                    msg: err.message,
-                    output: 'Could not find a Tesla with that ID'
-                })
+                next(err)
             } else {
                 res.locals.data.tesla = foundTesla
                 next()

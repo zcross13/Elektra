@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 const bcrypt = require('bcrypt')
 
-const SALT_ROUNDS = 6 
+// const SALT_ROUNDS = 6 
 
 
 const userSchema = new Schema({
@@ -24,28 +24,24 @@ const userSchema = new Schema({
         minLength: 3, 
         required: true
     }, 
-    reservations:[ {
-            type: Schema.Types.ObjectId,           
-            ref:'Reservations'
-    }],
     isAdmin:{
         type: Boolean, 
         default: false, 
     }, 
 }, {
     timestamps: true, 
-    toJSON: {
-        transform(doc, ret){
-            delete ret.password
-            return ret
-        }
-    }
+    // toJSON: {
+    //     transform(doc, ret){
+    //         delete ret.password
+    //         return ret
+    //     }
+    // }
 })
 
-userSchema.pre('save', async function (next){
-    if(!this.isModified('password')) return next()
-    this.password = await bcrypt.hash(this.password, SALT_ROUNDS)
-    return next()
-})
+// userSchema.pre('save', async function (next){
+//     if(!this.isModified('password')) return next()
+//     this.password = await bcrypt.hash(this.password, SALT_ROUNDS)
+//     return next()
+// })
 
 module.exports = model('User', userSchema)

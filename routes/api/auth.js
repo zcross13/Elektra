@@ -1,10 +1,11 @@
+
 const express = require('express')
 const router = express.Router()
-const { checkToken, dataController, apiController } = require('../../controllers/api/auth')
-const ensureLoggedIn = require('../../config/ensureLoggedIn')
+const {register, login} = require('../../controllers/api/auth')
 
-router.post('/', dataController.create, apiController.auth)
-router.post('/login', dataController.login, apiController.auth)
-router.get('/check-token', ensureLoggedIn, checkToken)
+
+router.post('/register', register)
+router.post('/login', login)
+
 
 module.exports = router 

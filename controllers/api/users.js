@@ -1,6 +1,17 @@
+const { faUserSecret } = require("@fortawesome/free-solid-svg-icons")
 const Users = require("../../models/user")
 
 const dataController = {
+    index(req, res, next) {
+        Users.find({}, (err, allUsers) => {
+            if (err) {
+                next(err)
+            } else {
+                res.locals.data.users = allUsers
+                next()
+            }
+        })
+    },
     // Destroy
     destroy(req, res, next) {
         Users.findByIdAndDelete(req.params.id, (err, deletedUser) => {

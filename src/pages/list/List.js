@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom'
 import { format } from 'date-fns'
 import { DateRange } from 'react-date-range'
 import SearchItem from '../../components/searchItem/SearchItem'
+import {useFetch} from '../../useFetch.js'
 
 export default function List() {
 
@@ -13,6 +14,8 @@ export default function List() {
     const [destination, setDestination] = useState(location.state.destination)
     const [date, setDate] = useState(location.state.date)
     const [openDate, setOpenDate] = useState(false)
+
+    const {apiData, loading, error, reFetch} = useFetch('/teslas')
 
     return (
         <div>
@@ -64,10 +67,7 @@ export default function List() {
                         <button>Search</button>
                     </div>
                     <div className='listResults'></div>
-                        <SearchItem/> 
-                        <SearchItem/>
-                        <SearchItem/>
-                        <SearchItem/>
+                    <SearchItem/>
                 </div>
             </div>
         </div>
