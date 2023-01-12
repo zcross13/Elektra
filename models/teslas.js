@@ -11,7 +11,7 @@ const teslaSchema = new mongoose.Schema({
         require: true 
     }, 
     images: { 
-        type:[ String], 
+        type:[String], 
         require: true 
     }, 
     teslaDescription: {

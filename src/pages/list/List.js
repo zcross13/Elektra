@@ -69,7 +69,7 @@ export default function List() {
                     <div className='listResults'></div>
                     {loading ? "loading": <>
                     {apiData.map(item => (
-                        <SearchItem/>
+                        <SearchItem item={item} key={item._id}/>
                     ))}
                     </>}
                 </div>

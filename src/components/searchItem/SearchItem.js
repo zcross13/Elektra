@@ -1,11 +1,12 @@
  import './searchItem.css'
+ import {Link} from 'react-router-dom'
 
 
 export default function SearchItem({item}){
 
     return(
         <div className='searchItem'>
-            <img src="https://static-assets.tesla.com/configurator/compositor?&bkba_opt=2&view=STUD_3QTR&size=1400&model=my&options=$APF2,$APBS,$DV4W,$INYPB,$PPSW,$PRMY1,$SC04,$MDLY,$WY19B,$MTY03,$STY5S,$CPF0,$FM3U&crop=1400,850,300,130&"
+            <img src={item.images}
                 alt='models'
                 className='siImg'
                 />
@@ -24,7 +25,9 @@ export default function SearchItem({item}){
                     <div className='siDetailsText'>
                         <span className='siPrice'>$89.99</span>
                         <span className='siTaxOp'>Includes taxes and fees</span>
+                        <Link to={`/teslas/${item._id}`}>
                         <button className='siCheckBtn'>See Availbilty</button>
+                        </Link>
                     </div>
                 </div>
         </div>
