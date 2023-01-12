@@ -1,4 +1,4 @@
-const axios = require('axios').default;
+
 const { useEffect, useState } = require("react")
 
 
@@ -12,8 +12,8 @@ const useFetch = (url) => {
         const fetchData = async ()  => {
             setLoading(true)
             try{
-            const response = await axios.get(url)
-            const data = await response?.data
+            const response = await fetch(url)
+            const data = await response.json()
             setApiData(data)
         }catch(err){
             setError(err)
@@ -24,18 +24,19 @@ const useFetch = (url) => {
     }, [url])
 
 
-// const reFetchData = async ()  => {
-//     setLoading(true)
-//     try{
-//     const response = await fetch(url)
-//     setApiData(response.data)
-// }catch(err){
-//     setError(err)
-// }
-// setLoading(false)
-// }
+const reFetchData = async ()  => {
+    setLoading(true)
+    try{
+    const response = await fetch(url)
+    const data = await response.json() 
+    setApiData(data)
+}catch(err){
+    setError(err)
+}
+setLoading(false)
+}
 
-return {apiData,loading,error}
+return {apiData,loading,error, reFetchData}
 }
 
 module.exports= {useFetch}
