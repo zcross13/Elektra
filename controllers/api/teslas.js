@@ -12,6 +12,16 @@ const dataController = {
             }
         })
     },
+    getMintoMax(req, res, next){
+        Teslas.find({ $and: [{pricePerDay:{$lte: req.query.max}},{pricePerDay:{$gte: req.query.min }}]}, (err, allTeslas) => {
+            if(err){
+                next(err)
+            }else{
+                res.locals.data.teslas = allTeslas
+                next()
+            }
+        })
+    },
     // Destroy
     destroy(req, res, next) {
         Teslas.findByIdAndDelete(req.params.id, (err, deletedTesla) => {

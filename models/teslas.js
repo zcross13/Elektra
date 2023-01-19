@@ -14,12 +14,8 @@ const teslaSchema = new mongoose.Schema({
         type:[String], 
         require: true 
     }, 
-    teslaDescription: {
-        type: String, 
-        required: true
-    },
-    teslaDetails: {
-        type: String, 
+    features: {
+        type: [String], 
         required: true
     },
     rating:{

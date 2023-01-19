@@ -1,5 +1,5 @@
 
-const { useEffect, useState } = require("react")
+import { useEffect, useState } from 'react'
 
 
 const useFetch = (url) => {
@@ -39,4 +39,4 @@ setLoading(false)
 return {apiData,loading,error, reFetchData}
 }
 
-module.exports= {useFetch}
+export default useFetch

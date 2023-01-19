@@ -7,14 +7,17 @@ import App from './App.js';
 
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
+import { SearchContextProvider } from './context/SearchContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
-    <Router>
-      <App />
-    </Router>
+      <SearchContextProvider>
+        <Router>
+          <App />
+        </Router>
+      </SearchContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

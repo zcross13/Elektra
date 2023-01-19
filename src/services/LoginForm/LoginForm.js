@@ -1,40 +1,36 @@
-import { useState } from 'react'
-import * as userService from '../../utilities/users-service'
+import "./login.css"
+import {AuthContext} from "../../context/AuthContext"
+import axios from "axios"
 
-export default function LoginForm({ setUser }) {
-    const [credentials, setCredentials] = useState({
-        email: '',
-        password: ''
+export default function Login(){
+    const [credentials, setCredentials ] = useState({
+        email:undefined, 
+        password: undefined 
     })
-    const [error, setError] = useState('')
 
-    const handleChange = (evt) => {
-        setCredentials({ ...credentials, [evt.target.name]: evt.target.value })
-        setError('')
-    }
+    const handleChange = ((e) => {
+        setCredentials(prev => ({...prev, [e.target.id]:e.target.value}))
+    })
 
-    const handleSubmit = async (evt) => {
-        evt.preventDefault()
-        try {
-            const user = await userService.login(credentials)
-            setUser(user)
-        } catch (error) {
-            setError(error.message)
+    const handleLogin= (async (e) => {
+        e.preventDefault()
+        dispatch({type:'LOGIN_START'})
+        try{
+            const res = await axios.post('/auth/login', credentials)
+
+        }catch(err){
+            dispatch({type:'LOGIN_FAILURE', payload:err.response.data})
         }
-    }
-
-    return (
-        <div>
-            <div className='form-container'>
-                <form autoComplete='off' onSubmit={handleSubmit}>
-                    <label>Email</label>
-                    <input type='email' name='email' value={credentials.email} onChange={handleChange} required />
-                    <label>Password</label>
-                    <input type='password' name='password' value={credentials.password} onChange={handleChange} required />
-                    <button type='submit'>LOG IN</button>
-                </form>
+    })
+    const {loading,error,dispatch} = useContext(AuthContext)
+    return(
+        <div className="login">
+            <div className="lContainer">
+                <input type='text' placeholder='email' id="email" onChnage={handleChange} className="lInput"/>
+                <input type='text' placeholder='password' id="password" onChnage={handleChange} className="lInput"/>
+                <button onClick={handleLogin} className='lButton'>Login</button>
+                {error && <span>{error.message}</span>}
             </div>
-            <h1 className='error-message'>&nbsp;{error}</h1>
         </div>
     )
 }

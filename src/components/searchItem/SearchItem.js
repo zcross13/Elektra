@@ -23,7 +23,7 @@ export default function SearchItem({item}){
                         <button>8.9</button>
                     </div>
                     <div className='siDetailsText'>
-                        <span className='siPrice'>$89.99</span>
+                        <span className='siPrice'>${item.pricePerDay}</span>
                         <span className='siTaxOp'>Includes taxes and fees</span>
                         <Link to={`/teslas/${item._id}`}>
                         <button className='siCheckBtn'>See Availbilty</button>

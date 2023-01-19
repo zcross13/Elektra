@@ -2,7 +2,9 @@
 import { createContext, useEffect, useReducer } from "react";
 
 const INITIAL_STATE = {
-    user: JSON.parse(localStorage.getItem('user')) || null ,
+    //Parse the data with JSON.parse(), and the data becomes a JavaScript object.
+    user: JSON.parse(localStorage.getItem('user')) || null , // check local storage for user if  no user then null
+    //The getItem() method belongs to the Storage Object, which can be either a localStorage object or a sessionStorage object.
     loading: false,
     error: null
 }
