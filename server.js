@@ -5,15 +5,8 @@ const path = require('path')
 const favicon = require('serve-favicon')
 const logger = require('morgan')
 const PORT = process.env.PORT || 3001
-const authRoute = require('./routes/api/auth')
-const teslasRoute = require('./routes/api/teslas')
-const usersRoute = require('./routes/api/users')
-const cookieParser = require('cookie-parser')
-
 
 const app = express()
-
-app.use(cookieParser())
 app.use(express.json())
 app.use((req, res, next) => {
     res.locals.data = {}
@@ -23,13 +16,10 @@ app.use((req, res, next) => {
 app.use(logger('dev'))
 app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')))
 app.use(express.static(path.join(__dirname, 'build')))
-app.use(require('./config/checkToken'))
 
-
-
-app.use('/api/users', usersRoute)
-app.use('/api/teslas', teslasRoute)
-app.use('/api/auth', authRoute)
+app.use('/api/teslas', require('./routes/api/teslas'))
+app.use('/api/users', require('./routes/api/users'))
+app.use('/api/reservations', require('./routes/api/reservations'))
 
 app.use((err,req,res,next) => {
     const errorStatus = err.status || 500
@@ -42,15 +32,6 @@ app.use((err,req,res,next) => {
     })
 })
 
-/*
-app.use('/api', routes) <====== Finish code once you got it
-*/
-
-
-
-app.get('/api/test', (req, res) => {
-    res.json({'eureka': 'you have found it'})
-})
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'))

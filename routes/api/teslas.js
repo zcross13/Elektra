@@ -1,22 +1,18 @@
-const express = require('express')
-const router = express.Router()
-const { dataController, apiController } = require('../../controllers/api/teslas')
-const {verifyAdmin } = require("../../utils/verifyToken")
+const router = require('express').Router()
+const {dataController, apiController} = require('../../controllers/api/teslas')
 
-// add routes
-router.get('/minmax', dataController.getMintoMax, apiController.index)
-// Index /api/teslas/
+
+
+// api/tesla
+// Index
 router.get('/', dataController.index, apiController.index)
-// Delete /api/teslas/:id
-router.delete('/:id', verifyAdmin, dataController.destroy, apiController.show)
-// Update /api/teslas/:id
-router.put('/:id', verifyAdmin, dataController.update, apiController.show)
-// Create /api/teslas/
-router.post('/', verifyAdmin, dataController.create, apiController.show)
-// Show /api/teslas/:id
+
+// api/tesla
+router.post('/', dataController.create, apiController.show)
+
+// api/tesla/:id
+// Show
+
 router.get('/:id', dataController.show, apiController.show)
 
-
-
-
-module.exports = router
+module.exports = router 

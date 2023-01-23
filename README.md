@@ -5,6 +5,10 @@
 ### A MERN stack base application. Elektra is a booking application when you can book Teslas. 
 
 
+## Heroku Link 
+https://elektra-mern-app.herokuapp.com/
+
+
 The project demostration a knowledge in the following... 
 
 1. CRUD 

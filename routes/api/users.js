@@ -1,29 +1,17 @@
-const express = require('express')
-const router = express.Router()
-const { dataController, apiController } = require('../../controllers/api/users')
-const {verifyToken, verifyUser,verifyAdmin } = require("../../utils/verifyToken")
+const router = require('express').Router()
+const userCtrl = require('../../controllers/api/users')
+const checkToken = require('../../config/checkToken')
+const ensureLoggedIn = require('../../config/ensureLoggedIn')
 
+// api/users
+// Signup
+router.post('/', userCtrl.signUp, userCtrl.respondWithToken)
 
+// api/users/login
+// Login 
+router.post('/login', userCtrl.login, userCtrl.respondWithToken)
 
-// router.get('/checktoken',verifyToken, (req,res,next) => {
-//     res.send('hello user, you are logged on')
-// })
+// api/users/reservations
+router.get('/reservations', checkToken, ensureLoggedIn, userCtrl.getReservationsByUser, userCtrl.respondWithReservations)
 
-// router.get('/checkuser/:id',verifyUser, (req,res,next) => {
-//     res.send('hello user, you are logged in and you can delete your account')
-// })
-
-// router.get('/checkadmin/:id',verifyAdmin, (req,res,next) => {
-//     res.send('hello Admin, you are logged in and you can delete all account')
-// })
-// Delete /api/users/:id
-router.delete('/:id', verifyUser, dataController.destroy, apiController.show)
-// Update /api/users/:id
-router.put('/:id', verifyUser, dataController.update, apiController.show)
-// Show /api/users/:id
-router.get('/:id', verifyUser, dataController.show, apiController.show)
-// GET ALL User
-router.get('/', verifyAdmin, dataController.index, apiController.index )
-
-
-module.exports = router
+module.exports = router 

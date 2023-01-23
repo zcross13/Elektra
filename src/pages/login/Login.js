@@ -1,44 +1,44 @@
-import { useContext, useState } from 'react'
-import { AuthContext } from '../../context/AuthContext'
-import './login.css'
-
+import "./login.css"
+import {useState, useContext} from "react"
+import {AuthContext} from "../../context/AuthContext"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 export default function Login(){
-    const [credentials, setCredentials] = useState({
-        email: undefined,
-        password: undefined
+    const [credentials, setCredentials ] = useState({
+        email:undefined, 
+        password: undefined 
     })
 
-    const {user, loading, error, dispatch} = useContext(AuthContext)
+    const {user, loading,error,dispatch} = useContext(AuthContext)
 
-    const handleChange = (e)=> {
-        setCredentials((prev) => ({...prev, [e.target.id]: e.target.value}))
-    }
+    const naviagte = useNavigate()
 
-    const handleClick = async e => {
+    const handleChange = (e => {
+        setCredentials(prev => ({...prev, [e.target.id]:e.target.value}))
+    })
+
+    const handleLogin= (async (e) => {
         e.preventDefault()
-        dispatch({type: 'LOGIN_START'})
+        dispatch({type:'LOGIN_START'})
         try{
-            const res = await fetch('/auth/login', credentials, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            dispatch({type: 'LOGIN_SUCESS', payload: res.data})
-        } catch{
-            dispatch({type:'LOGIN_FAILURE', payload:error.response.data})
+            const res = await axios.post('/auth/login', credentials)
+            dispatch({type:"LOGIN_SUCCESS", payload:res.data})
+            naviagte('/')
+        }catch(err){
+            dispatch({type:'LOGIN_FAILURE', payload:err.response.data})
         }
-    }
+    })
+    
 
     console.log(user)
 
     return(
-        <div className='login'>
-            <div className='lContainer'>
-                <input type='text' placeholder='email' id='email' onChange={handleChange} className='lInput'/>
-                <input type='password' placeholder='password' id='password' onChange={handleChange} className='lInput'/>
-                <button onClick={handleClick} className='lButton'>Login</button>
+        <div className="login">
+            <div className="lContainer">
+                <input type='text' placeholder='email' id="email" onChange={handleChange} className="lInput"/>
+                <input type='text' placeholder='password' id="password" onChange={handleChange} className="lInput"/>
+                <button disable={loading} onClick={handleLogin} className='lButton'>Login</button>
                 {error && <span>{error.message}</span>}
             </div>
         </div>

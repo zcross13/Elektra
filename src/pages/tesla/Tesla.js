@@ -1,10 +1,12 @@
 import './tesla.css'
 import NavBar from '../../components/navbar/NavBar'
 import Header from '../../components/header/Header'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useFetch } from '../../useFetch.js'
 import { useState, useContext } from 'react'
 import { SearchContext } from '../../context/SearchContext'
+import {AuthContext} from "../../context/AuthContext"
+import Reserve from '../../components/reserve/Reserve'
 
 
 export default function Tesla() {
@@ -14,8 +16,10 @@ export default function Tesla() {
 
 
     const { apiData, loading, error, reFetchData } = useFetch(`/teslas/${id}`)
-    console.log(apiData)
-
+    const {user} =useContext(AuthContext)
+    const navigate = useNavigate()
+    const [open, setOpen] = useState(false)
+    const [openModal, setOpenModal] = useState(false)
     const { dates } = useContext(SearchContext)
 
 console.log(dates)
@@ -31,17 +35,9 @@ function dayDifference(date1, date2){
 
 const days = dayDifference(dates[0].endDate, dates[0].startDate) 
 
-    // const photos = [
-    //     {
-    //         src: 'https://tesla-cdn.thron.com/delivery/public/image/tesla/03c34975-991c-45ee-a340-2b700bf7de01/bvlatuR/std/960x540/meet-your-tesla_model-s'
-    //     },
-    //     {
-    //         src: 'https://static-assets.tesla.com/configurator/compositor?&bkba_opt=2&view=STUD_SEAT&size=1400&model=m3&options=$APBS,$DV4W,$IPB1,$PPSW,$PRM31,$SC04,$MDL3,$W40B,$MT324,$CPF0,$RSF1,$CW03&crop=1400,850,300,130&'
-    //     },
-    //     {
-    //         src: "https://static-assets.tesla.com/configurator/compositor?&bkba_opt=2&view=SIDE&size=1400&model=m3&options=$APBS,$DV4W,$IPB1,$PPSW,$PRM31,$SC04,$MDL3,$W40B,$MT324,$CPF0,$RSF1,$CW03&crop=1400,850,300,130&"
-    //     }
-    // ]
+    const handleClick = () => {
+        
+    }
     return (
         <>
             <NavBar />
@@ -78,12 +74,13 @@ const days = dayDifference(dates[0].endDate, dates[0].startDate)
                                 <h2>
                                     <b>${apiData.pricePerDay * days}</b> for ({days} days)
                                 </h2>
-                                <button className='bookBtn'>Reserve or Book Now!</button>
+                                <button className='bookBtn' onClick={handleClick}>Reserve or Book Now!</button>
                             </div>
                         </div>
                     </div>
                 </div>)
             }
+            {openModal && <Reserve setOpen={setOpenModal} hotelId={id}/>}
         </>
     )
 }

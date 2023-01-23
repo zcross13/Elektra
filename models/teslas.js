@@ -1,7 +1,6 @@
-const mongoose = require('mongoose')
-const {model } = require('mongoose')
+const { Schema, model } = require('mongoose')
 
-const teslaSchema = new mongoose.Schema({
+const teslaSchema = new Schema({
     model: { 
         type: String, 
         require: true 
@@ -23,10 +22,7 @@ const teslaSchema = new mongoose.Schema({
         min:0, 
         max:5,
     }, 
-    reservations:[{unavailableDates: {type: [Date]}}]
 })
 
 
-const Tesla= model('Tesla', teslaSchema)
-
-module.exports= Tesla
+module.exports = model('Tesla', teslaSchema)

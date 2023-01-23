@@ -1,67 +1,69 @@
-const { faUserSecret } = require("@fortawesome/free-solid-svg-icons")
-const Users = require("../../models/user")
+require('dotenv').config()
 
-const dataController = {
-    index(req, res, next) {
-        Users.find({}, (err, allUsers) => {
-            if (err) {
-                next(err)
-            } else {
-                res.locals.data.users = allUsers
-                next()
-            }
-        })
-    },
-    // Destroy
-    destroy(req, res, next) {
-        Users.findByIdAndDelete(req.params.id, (err, deletedUser) => {
-            if (err) {
-                res.status(400).send({
-                    msg: err.message
-                })
-            } else {
-                res.locals.data.user = deletedUser
-                next()
-            }
-        })
-    },
-    // Update
-    update(req, res, next) {
-        Users.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedUser) => {
-            if (err) {
-                res.status(400).send({
-                    msg: err.message
-                })
-            } else {
-                res.locals.data.users = updatedUser
-                next()
-            }
-        })
-    },
-    // Edit
-    // Show
-    show(req, res, next) {
-        Users.findById(req.params.id, (err, foundUser) => {
-            if (err) {
-                res.status(404).send({
-                    msg: err.message,
-                    output: 'Could not find a user with that ID'
-                })
-            } else {
-                res.locals.data.user = foundUser
-                next()
-            }
-        })
+const User = require('../../models/user')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+const crypto = require('crypto')
+
+const signUp = async (req, res, next) => {
+    try {
+        const user = await User.create(req.body)
+        const token = createJWT(user)
+        res.locals.data.user = user
+        res.locals.data.token = token
+        next()
+    } catch (error) {
+        res.status(400).json({ msg: error.message })
     }
 }
 
-const apiController = {
-    index(req, res, next) {
-        res.json(res.locals.data.users)
-    },
-    show(req, res, next) {
-        res.json(res.locals.data.user)
+const login = async (req, res, next) => {
+    try {
+        const user = await User.findOne({ email: req.body.email }).populate()
+        if (!user) throw new Error('user not found, email was invalid')
+        const password = crypto.createHmac('sha256', process.env.SECRET).update(req.body.password).digest('hex').split('').reverse().join('')
+        const match = await bcrypt.compare(req.body.password, user.password)
+        if (!match) throw new Error('Password did not match')
+        res.locals.data.user = user
+        res.locals.data.token = createJWT(user)
+        next()
+    } catch(error){
+        res.status(400).json({ msg: error.message})
     }
 }
 
-module.exports = { dataController, apiController }
+const getReservationsByUser = async(req, res, next) => {
+    try{
+        const user = await User.findOne({ email: res.locals.data.email })
+        const reservation = user.reservations
+        res.locals.data.reservations = reservation
+        next()
+    }catch(error){
+        res.status(400).json({ msg: error.message })
+    }
+}
+
+const respondWithToken = (req, res) => {
+    res.json(res.locals.data.token)
+}
+
+const respondWithUser = (req, res) => {
+    res.json(res.locals.data.user)
+}
+
+const respondWithReservations = (req, res) => {
+    res.json(res.locals.data.reservations)
+}
+
+function createJWT(user){
+    return jwt.sign({ user }, process.env.SECRET, {expiresIn:'48h', allowInsecureKeySizes:true})
+}
+
+module.exports =  {
+    signUp, 
+    login, 
+    getReservationsByUser, 
+    respondWithToken, 
+    respondWithReservations,
+    respondWithUser
+}
