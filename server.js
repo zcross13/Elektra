@@ -17,18 +17,19 @@ app.use(logger('dev'))
 app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')))
 app.use(express.static(path.join(__dirname, 'build')))
 
+app.use('/api/auth', require('./routes/api/auth'))
 app.use('/api/teslas', require('./routes/api/teslas'))
 app.use('/api/users', require('./routes/api/users'))
 app.use('/api/reservations', require('./routes/api/reservations'))
 
-app.use((err,req,res,next) => {
+app.use((err, req, res, next) => {
     const errorStatus = err.status || 500
     const errorMessage = err.message || "Something went wrong"
     return res.status(errorStatus).json({
-        success: false, 
+        success: false,
         status: errorStatus,
-        message:errorMessage, 
-        stack: err.stack, 
+        message: errorMessage,
+        stack: err.stack,
     })
 })
 
